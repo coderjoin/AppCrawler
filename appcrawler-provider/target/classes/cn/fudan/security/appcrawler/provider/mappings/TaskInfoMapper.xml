@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fudan.security.appcrawler.provider.dao.TaskInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.fudan.security.appcrawler.provider.entity.TaskInfo" >
+    <id column="taskId" property="taskid" jdbcType="INTEGER" />
+    <result column="market" property="market" jdbcType="VARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="taskCreator" property="taskcreator" jdbcType="VARCHAR" />
+    <result column="scope" property="scope" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="tableName" property="tablename" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    taskId, market, createDate, taskCreator, scope, status, tableName
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.fudan.security.appcrawler.provider.entity.TaskInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from task_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from task_info
+    where taskId = #{taskid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from task_info
+    where taskId = #{taskid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.fudan.security.appcrawler.provider.entity.TaskInfoExample" >
+    delete from task_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.fudan.security.appcrawler.provider.entity.TaskInfo" >
+    insert into task_info (taskId, market, createDate, 
+      taskCreator, scope, status, 
+      tableName)
+    values (#{taskid,jdbcType=INTEGER}, #{market,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{taskcreator,jdbcType=VARCHAR}, #{scope,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{tablename,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.fudan.security.appcrawler.provider.entity.TaskInfo" >
+    insert into task_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="taskid != null" >
+        taskId,
+      </if>
+      <if test="market != null" >
+        market,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="taskcreator != null" >
+        taskCreator,
+      </if>
+      <if test="scope != null" >
+        scope,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="tablename != null" >
+        tableName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="taskid != null" >
+        #{taskid,jdbcType=INTEGER},
+      </if>
+      <if test="market != null" >
+        #{market,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskcreator != null" >
+        #{taskcreator,jdbcType=VARCHAR},
+      </if>
+      <if test="scope != null" >
+        #{scope,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="tablename != null" >
+        #{tablename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.fudan.security.appcrawler.provider.entity.TaskInfoExample" resultType="java.lang.Integer" >
+    select count(*) from task_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update task_info
+    <set >
+      <if test="record.taskid != null" >
+        taskId = #{record.taskid,jdbcType=INTEGER},
+      </if>
+      <if test="record.market != null" >
+        market = #{record.market,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdate != null" >
+        createDate = #{record.createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.taskcreator != null" >
+        taskCreator = #{record.taskcreator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scope != null" >
+        scope = #{record.scope,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tablename != null" >
+        tableName = #{record.tablename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update task_info
+    set taskId = #{record.taskid,jdbcType=INTEGER},
+      market = #{record.market,jdbcType=VARCHAR},
+      createDate = #{record.createdate,jdbcType=TIMESTAMP},
+      taskCreator = #{record.taskcreator,jdbcType=VARCHAR},
+      scope = #{record.scope,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      tableName = #{record.tablename,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.fudan.security.appcrawler.provider.entity.TaskInfo" >
+    update task_info
+    <set >
+      <if test="market != null" >
+        market = #{market,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskcreator != null" >
+        taskCreator = #{taskcreator,jdbcType=VARCHAR},
+      </if>
+      <if test="scope != null" >
+        scope = #{scope,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="tablename != null" >
+        tableName = #{tablename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where taskId = #{taskid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.fudan.security.appcrawler.provider.entity.TaskInfo" >
+    update task_info
+    set market = #{market,jdbcType=VARCHAR},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      taskCreator = #{taskcreator,jdbcType=VARCHAR},
+      scope = #{scope,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      tableName = #{tablename,jdbcType=VARCHAR}
+    where taskId = #{taskid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fudan.security.appcrawler.provider.dao.AppinfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.fudan.security.appcrawler.provider.entity.Appinfo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="appName" property="appname" jdbcType="VARCHAR" />
+    <result column="pkgName" property="pkgname" jdbcType="VARCHAR" />
+    <result column="authorName" property="authorname" jdbcType="VARCHAR" />
+    <result column="appDownCount" property="appdowncount" jdbcType="VARCHAR" />
+    <result column="versionName" property="versionname" jdbcType="VARCHAR" />
+    <result column="apkMd5" property="apkmd5" jdbcType="VARCHAR" />
+    <result column="categoryName" property="categoryname" jdbcType="VARCHAR" />
+    <result column="appSize" property="appsize" jdbcType="VARCHAR" />
+    <result column="apkDownloaded" property="apkdownloaded" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.fudan.security.appcrawler.provider.entity.Appinfo" extends="BaseResultMap" >
+    <result column="appDownUrl" property="appdownurl" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, appName, pkgName, authorName, appDownCount, versionName, apkMd5, categoryName, 
+    appSize, apkDownloaded
+  </sql>
+  <sql id="Blob_Column_List" >
+    appDownUrl
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.fudan.security.appcrawler.provider.entity.AppinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from appinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.fudan.security.appcrawler.provider.entity.AppinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from appinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from appinfo
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from appinfo
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.fudan.security.appcrawler.provider.entity.AppinfoExample" >
+    delete from appinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.fudan.security.appcrawler.provider.entity.Appinfo" >
+    insert into appinfo (id, appName, pkgName, 
+      authorName, appDownCount, versionName, 
+      apkMd5, categoryName, appSize, 
+      apkDownloaded, appDownUrl)
+    values (#{id,jdbcType=VARCHAR}, #{appname,jdbcType=VARCHAR}, #{pkgname,jdbcType=VARCHAR}, 
+      #{authorname,jdbcType=VARCHAR}, #{appdowncount,jdbcType=VARCHAR}, #{versionname,jdbcType=VARCHAR}, 
+      #{apkmd5,jdbcType=VARCHAR}, #{categoryname,jdbcType=VARCHAR}, #{appsize,jdbcType=VARCHAR}, 
+      #{apkdownloaded,jdbcType=BIT}, #{appdownurl,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.fudan.security.appcrawler.provider.entity.Appinfo" >
+    insert into appinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="appname != null" >
+        appName,
+      </if>
+      <if test="pkgname != null" >
+        pkgName,
+      </if>
+      <if test="authorname != null" >
+        authorName,
+      </if>
+      <if test="appdowncount != null" >
+        appDownCount,
+      </if>
+      <if test="versionname != null" >
+        versionName,
+      </if>
+      <if test="apkmd5 != null" >
+        apkMd5,
+      </if>
+      <if test="categoryname != null" >
+        categoryName,
+      </if>
+      <if test="appsize != null" >
+        appSize,
+      </if>
+      <if test="apkdownloaded != null" >
+        apkDownloaded,
+      </if>
+      <if test="appdownurl != null" >
+        appDownUrl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="appname != null" >
+        #{appname,jdbcType=VARCHAR},
+      </if>
+      <if test="pkgname != null" >
+        #{pkgname,jdbcType=VARCHAR},
+      </if>
+      <if test="authorname != null" >
+        #{authorname,jdbcType=VARCHAR},
+      </if>
+      <if test="appdowncount != null" >
+        #{appdowncount,jdbcType=VARCHAR},
+      </if>
+      <if test="versionname != null" >
+        #{versionname,jdbcType=VARCHAR},
+      </if>
+      <if test="apkmd5 != null" >
+        #{apkmd5,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryname != null" >
+        #{categoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="appsize != null" >
+        #{appsize,jdbcType=VARCHAR},
+      </if>
+      <if test="apkdownloaded != null" >
+        #{apkdownloaded,jdbcType=BIT},
+      </if>
+      <if test="appdownurl != null" >
+        #{appdownurl,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.fudan.security.appcrawler.provider.entity.AppinfoExample" resultType="java.lang.Integer" >
+    select count(*) from appinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update appinfo
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appname != null" >
+        appName = #{record.appname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pkgname != null" >
+        pkgName = #{record.pkgname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorname != null" >
+        authorName = #{record.authorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appdowncount != null" >
+        appDownCount = #{record.appdowncount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.versionname != null" >
+        versionName = #{record.versionname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apkmd5 != null" >
+        apkMd5 = #{record.apkmd5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryname != null" >
+        categoryName = #{record.categoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appsize != null" >
+        appSize = #{record.appsize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apkdownloaded != null" >
+        apkDownloaded = #{record.apkdownloaded,jdbcType=BIT},
+      </if>
+      <if test="record.appdownurl != null" >
+        appDownUrl = #{record.appdownurl,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update appinfo
+    set id = #{record.id,jdbcType=VARCHAR},
+      appName = #{record.appname,jdbcType=VARCHAR},
+      pkgName = #{record.pkgname,jdbcType=VARCHAR},
+      authorName = #{record.authorname,jdbcType=VARCHAR},
+      appDownCount = #{record.appdowncount,jdbcType=VARCHAR},
+      versionName = #{record.versionname,jdbcType=VARCHAR},
+      apkMd5 = #{record.apkmd5,jdbcType=VARCHAR},
+      categoryName = #{record.categoryname,jdbcType=VARCHAR},
+      appSize = #{record.appsize,jdbcType=VARCHAR},
+      apkDownloaded = #{record.apkdownloaded,jdbcType=BIT},
+      appDownUrl = #{record.appdownurl,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update appinfo
+    set id = #{record.id,jdbcType=VARCHAR},
+      appName = #{record.appname,jdbcType=VARCHAR},
+      pkgName = #{record.pkgname,jdbcType=VARCHAR},
+      authorName = #{record.authorname,jdbcType=VARCHAR},
+      appDownCount = #{record.appdowncount,jdbcType=VARCHAR},
+      versionName = #{record.versionname,jdbcType=VARCHAR},
+      apkMd5 = #{record.apkmd5,jdbcType=VARCHAR},
+      categoryName = #{record.categoryname,jdbcType=VARCHAR},
+      appSize = #{record.appsize,jdbcType=VARCHAR},
+      apkDownloaded = #{record.apkdownloaded,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.fudan.security.appcrawler.provider.entity.Appinfo" >
+    update appinfo
+    <set >
+      <if test="appname != null" >
+        appName = #{appname,jdbcType=VARCHAR},
+      </if>
+      <if test="pkgname != null" >
+        pkgName = #{pkgname,jdbcType=VARCHAR},
+      </if>
+      <if test="authorname != null" >
+        authorName = #{authorname,jdbcType=VARCHAR},
+      </if>
+      <if test="appdowncount != null" >
+        appDownCount = #{appdowncount,jdbcType=VARCHAR},
+      </if>
+      <if test="versionname != null" >
+        versionName = #{versionname,jdbcType=VARCHAR},
+      </if>
+      <if test="apkmd5 != null" >
+        apkMd5 = #{apkmd5,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryname != null" >
+        categoryName = #{categoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="appsize != null" >
+        appSize = #{appsize,jdbcType=VARCHAR},
+      </if>
+      <if test="apkdownloaded != null" >
+        apkDownloaded = #{apkdownloaded,jdbcType=BIT},
+      </if>
+      <if test="appdownurl != null" >
+        appDownUrl = #{appdownurl,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.fudan.security.appcrawler.provider.entity.Appinfo" >
+    update appinfo
+    set appName = #{appname,jdbcType=VARCHAR},
+      pkgName = #{pkgname,jdbcType=VARCHAR},
+      authorName = #{authorname,jdbcType=VARCHAR},
+      appDownCount = #{appdowncount,jdbcType=VARCHAR},
+      versionName = #{versionname,jdbcType=VARCHAR},
+      apkMd5 = #{apkmd5,jdbcType=VARCHAR},
+      categoryName = #{categoryname,jdbcType=VARCHAR},
+      appSize = #{appsize,jdbcType=VARCHAR},
+      apkDownloaded = #{apkdownloaded,jdbcType=BIT},
+      appDownUrl = #{appdownurl,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.fudan.security.appcrawler.provider.entity.Appinfo" >
+    update appinfo
+    set appName = #{appname,jdbcType=VARCHAR},
+      pkgName = #{pkgname,jdbcType=VARCHAR},
+      authorName = #{authorname,jdbcType=VARCHAR},
+      appDownCount = #{appdowncount,jdbcType=VARCHAR},
+      versionName = #{versionname,jdbcType=VARCHAR},
+      apkMd5 = #{apkmd5,jdbcType=VARCHAR},
+      categoryName = #{categoryname,jdbcType=VARCHAR},
+      appSize = #{appsize,jdbcType=VARCHAR},
+      apkDownloaded = #{apkdownloaded,jdbcType=BIT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+  <insert id="insertApp" >
+    insert into ${tableName}(id, appName, pkgName,
+      authorName, appDownCount, versionName,
+      apkMd5, categoryName, appSize,
+      apkDownloaded, appDownUrl)
+    values (#{appinfo.id}, #{appinfo.appname}, #{appinfo.pkgname},
+      #{appinfo.authorname}, #{appinfo.appdowncount}, #{appinfo.versionname},
+      #{appinfo.apkmd5}, #{appinfo.categoryname}, #{appinfo.appsize},
+      #{appinfo.apkdownloaded}, #{appinfo.appdownurl})
+  </insert>
+</mapper>
